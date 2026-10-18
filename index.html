@@ -35,7 +35,7 @@
     }
   </style>
 </head>
-<body class="pb-28 max-w-md mx-auto min-h-screen select-none">
+<body class="pb-32 max-w-md mx-auto min-h-screen select-none">
 
   <!-- TOP ATOMIC HABITS IDENTITY & SCOREBOARD -->
   <header class="p-4 bg-slate-900/90 backdrop-blur sticky top-0 z-30 border-b border-slate-800">
@@ -70,6 +70,22 @@
 
   <!-- MAIN CONTENT -->
   <main class="px-4 pt-3 space-y-4">
+
+    <!-- DAILY ISLAMIC WISDOM & STRENGTH QUOTE -->
+    <section class="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-emerald-500/30 rounded-2xl p-4 shadow-lg">
+      <div class="flex items-center justify-between mb-1.5">
+        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">
+          Daily Wisdom & Strength
+        </span>
+        <span id="quoteDayLabel" class="text-[10px] text-slate-400"></span>
+      </div>
+      <p id="dailyQuoteText" class="text-xs text-slate-200 italic leading-relaxed mt-2">
+        <!-- Populated by JS -->
+      </p>
+      <div id="dailyQuoteSource" class="text-[11px] font-semibold text-emerald-400 mt-2 text-right">
+        <!-- Populated by JS -->
+      </div>
+    </section>
 
     <!-- LAW 1: MAKE IT OBVIOUS (WEEKLY VISUAL CHAIN) -->
     <section class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5">
@@ -189,6 +205,58 @@
   </div>
 
   <script>
+    // AUTHENTIC QUOTES COLLECTION (Strength, Consistency, Health)
+    const ISLAMIC_QUOTES = [
+      {
+        text: "The strong believer is better and more beloved to Allah than the weak believer, while there is good in both.",
+        source: "Prophet Muhammad (ﷺ) — Sahih Muslim"
+      },
+      {
+        text: "The most beloved deeds to Allah are those done regularly, even if they are small.",
+        source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari"
+      },
+      {
+        text: "Ask Allah for certainty and well-being (health), for truly, after certainty, no one is given a blessing better than health.",
+        source: "Prophet Muhammad (ﷺ) — Sunan An-Nasa'i"
+      },
+      {
+        text: "Take advantage of five before five: your youth before your old age, your health before your sickness...",
+        source: "Prophet Muhammad (ﷺ) — Al-Mustadrak al-Hakim"
+      },
+      {
+        text: "Verily, your body has a right over you.",
+        source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari"
+      },
+      {
+        text: "Patience is of two types: patience over what you hate, and patience with what you love (consistency in obedience).",
+        source: "Imam Ali ibn Abi Talib (ra)"
+      },
+      {
+        text: "Two blessings which many people squander: Health and free time.",
+        source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari"
+      },
+      {
+        text: "Strive for what benefits you, seek help from Allah, and do not lose heart.",
+        source: "Prophet Muhammad (ﷺ) — Sahih Muslim"
+      }
+    ];
+
+    function loadDailyQuote() {
+      const today = new Date();
+      // Generate a consistent index based on the day of the year so it changes daily
+      const start = new Date(today.getFullYear(), 0, 0);
+      const diff = today - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
+      
+      const quoteIndex = dayOfYear % ISLAMIC_QUOTES.length;
+      const selectedQuote = ISLAMIC_QUOTES[quoteIndex];
+
+      document.getElementById("dailyQuoteText").textContent = `"${selectedQuote.text}"`;
+      document.getElementById("dailyQuoteSource").textContent = `— ${selectedQuote.source}`;
+      document.getElementById("quoteDayLabel").textContent = today.toLocaleDateString("en-GB", { weekday: 'long', day: 'numeric', month: 'short' });
+    }
+
     const WORKOUTS = {
       badminton: {
         title: "Monday: Badminton Night",
@@ -270,7 +338,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Feet shoulder-width apart on the middle of the sled. Never lock your knees completely at the top.",
-            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
+            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
           },
           {
             id: "legs_curl",
@@ -279,7 +347,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Align your knee joint with the machine's pivot dot. Rest ankle pad just above your heels.",
-            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
+            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
           },
           {
             id: "legs_extension",
@@ -288,7 +356,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Adjust backrest so the seat edge sits snugly behind your knees. Pause 1 second at the top.",
-            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
+            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
           },
           {
             id: "legs_calf",
@@ -297,7 +365,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "1-second pause at the bottom stretch, 1-second squeeze at the top—don't bounce.",
-            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
+            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
           }
         ]
       },
@@ -348,7 +416,7 @@
       }
     };
 
-    const STORAGE_KEY = "atomic_puregym_v3";
+    const STORAGE_KEY = "atomic_puregym_v5";
     let state = {
       currentTab: "legs",
       gatewayMode: false,
@@ -389,6 +457,7 @@
     }
 
     function renderAll() {
+      loadDailyQuote();
       renderHeaderStats();
       renderWeekChain();
       renderTabs();
@@ -458,4 +527,341 @@
       labels.forEach((dayInfo, idx) => {
         const d = new Date(monday);
         d.setDate(monday.getDate() + idx);
-        c
+        const offset = d.getTimezoneOffset();
+        const iso = new Date(d.getTime() - offset * 60 * 1000).toISOString().split("T")[0];
+
+        const isCompleted = state.completedDays.some(entry => entry.date === iso);
+        const isToday = idx === currentDayIndex;
+        const isRest = dayInfo.target === "Rest";
+
+        const cell = document.createElement("div");
+        cell.className = `p-1.5 rounded-xl border text-center transition ${
+          isCompleted
+            ? "bg-emerald-500/20 border-emerald-500 text-emerald-300"
+            : isToday
+            ? "bg-slate-700/80 border-amber-400 text-white"
+            : "bg-slate-900/60 border-slate-800 text-slate-400"
+        }`;
+
+        cell.innerHTML = `
+          <div class="text-[10px] font-bold">${dayInfo.name}</div>
+          <div class="my-1 text-sm">${isCompleted ? "✅" : isRest ? "🧘" : "⭕"}</div>
+          <div class="text-[9px] truncate opacity-80">${dayInfo.target}</div>
+        `;
+        container.appendChild(cell);
+      });
+    }
+
+    function renderTabs() {
+      ["badminton", "push", "legs", "pull"].forEach(tab => {
+        const el = document.getElementById(`tab-${tab}`);
+        if (state.currentTab === tab) {
+          el.classList.add("tab-active");
+          el.classList.remove("text-slate-300");
+        } else {
+          el.classList.remove("tab-active");
+          el.classList.add("text-slate-300");
+        }
+      });
+    }
+
+    function renderWorkout() {
+      const workout = WORKOUTS[state.currentTab];
+      const today = getTodayISO();
+
+      document.getElementById("workoutTitle").textContent = workout.title;
+      document.getElementById("workoutSubtitle").textContent = workout.subtitle;
+      document.getElementById("habitCueText").textContent = workout.cue;
+      document.getElementById("twoMinToggle").checked = state.gatewayMode;
+
+      const container = document.getElementById("exerciseContainer");
+      container.innerHTML = "";
+
+      workout.exercises.forEach(ex => {
+        const setsCount = state.gatewayMode ? 1 : ex.defaultSets;
+        const savedWeight = state.weights[ex.id] || "";
+
+        let setsButtonsHTML = "";
+        for (let s = 0; s < setsCount; s++) {
+          const setKey = `${today}_${ex.id}_${s}`;
+          const isDone = !!state.completedSets[setKey];
+          setsButtonsHTML += `
+            <button
+              onclick="toggleSet('${ex.id}', ${s})"
+              class="set-btn py-2.5 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center ${
+                isDone
+                  ? "done"
+                  : "bg-slate-900/90 border-slate-700 text-slate-300 hover:border-slate-500"
+              }"
+            >
+              <span>SET ${s + 1}</span>
+              <span class="text-[10px] font-normal opacity-90">${isDone ? "✓ Done" : ex.reps}</span>
+            </button>
+          `;
+        }
+
+        const videoSectionHTML = ex.url
+          ? `
+            <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex flex-col space-y-2">
+              <a
+                href="${ex.url}"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center justify-center space-x-2 w-full py-2.5 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold text-xs hover:bg-emerald-500/25 transition"
+              >
+                <span>▶️ Watch Official PureGym Video Guide</span>
+              </a>
+              ${
+                ex.altUrl
+                  ? `
+                  <a
+                    href="${ex.altUrl}"
+                    target="_blank"
+                    rel="noopener"
+                    class="text-[11px] text-sky-400 hover:underline text-center"
+                  >
+                    ${ex.altLabel}
+                  </a>
+                `
+                  : ""
+              }
+            </div>
+          `
+          : "";
+
+        const weightInputHTML = ex.url
+          ? `
+            <div class="flex items-center space-x-1.5 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
+              <span class="text-[11px] text-slate-400">Pin:</span>
+              <input
+                type="text"
+                placeholder="kg"
+                value="${savedWeight}"
+                onchange="saveWeight('${ex.id}', this.value)"
+                class="w-12 bg-transparent text-xs font-bold text-white focus:outline-none text-center"
+              />
+            </div>
+          `
+          : "";
+
+        const card = document.createElement("div");
+        card.className = "bg-slate-800/80 border border-slate-700/90 rounded-2xl p-4 shadow-md";
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-700 text-emerald-300 mb-1">
+                ${ex.muscle}
+              </span>
+              <h3 class="text-base font-bold text-white leading-snug">${ex.name}</h3>
+            </div>
+            ${weightInputHTML}
+          </div>
+
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+            💡 ${ex.tip}
+          </p>
+
+          <div class="grid ${setsCount === 1 ? "grid-cols-1" : "grid-cols-3"} gap-2 mt-3">
+            ${setsButtonsHTML}
+          </div>
+
+          ${videoSectionHTML}
+        `;
+        container.appendChild(card);
+      });
+
+      const alreadyLoggedToday = state.completedDays.some(
+        d => d.date === today && d.type === state.currentTab
+      );
+      const btn = document.getElementById("completeDayBtn");
+      const stamp = document.getElementById("completedTimestamp");
+
+      if (alreadyLoggedToday) {
+        btn.className =
+          "w-full py-4 px-5 rounded-2xl font-extrabold text-base transition flex items-center justify-center space-x-2 bg-slate-800 border border-emerald-500/50 text-emerald-400";
+        btn.innerHTML = `<span>🎉 Session Logged Today! (Tap to Undo)</span>`;
+        stamp.classList.remove("hidden");
+        stamp.textContent = "Identity vote cast! Your total days counter has been updated.";
+      } else {
+        btn.className =
+          "w-full py-4 px-5 rounded-2xl font-extrabold text-base shadow-lg transition flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950";
+        btn.innerHTML = `<span>✅ Cast Identity Vote — Mark Day Done</span>`;
+        stamp.classList.add("hidden");
+      }
+    }
+
+    function renderSupplements() {
+      const today = getTodayISO();
+      
+      const creatineKey = `${today}_creatine`;
+      const isCreatineDone = !!state.supplements[creatineKey];
+      const creatineBtn = document.getElementById("suppCreatineBtn");
+      const creatineText = document.getElementById("creatineStatusText");
+      if (isCreatineDone) {
+        creatineBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center done";
+        creatineText.textContent = "✓ Taken Today";
+      } else {
+        creatineBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center bg-slate-900/90 border-slate-700 text-slate-300";
+        creatineText.textContent = "5g Monohydrate • Pending";
+      }
+
+      const proteinKey = `${today}_protein`;
+      const isProteinDone = !!state.supplements[proteinKey];
+      const proteinBtn = document.getElementById("suppProteinBtn");
+      const proteinText = document.getElementById("proteinStatusText");
+      if (isProteinDone) {
+        proteinBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center done";
+        proteinText.textContent = "✓ Goal Hit Today";
+      } else {
+        proteinBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center bg-slate-900/90 border-slate-700 text-slate-300";
+        proteinText.textContent = "Daily Goal • Pending";
+      }
+    }
+
+    function renderHistory() {
+      const list = document.getElementById("historyList");
+      if (state.completedDays.length === 0) {
+        list.innerHTML = `<div class="text-slate-500 italic">No workouts completed yet. Cast your first identity vote today!</div>`;
+        return;
+      }
+      const recent = [...state.completedDays].reverse().slice(0, 8);
+      list.innerHTML = recent
+        .map(
+          item => `
+        <div class="flex justify-between items-center py-1.5 px-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+          <span class="font-semibold text-emerald-400">✓ ${item.title}</span>
+          <span class="text-slate-400">${item.date}</span>
+        </div>
+      `
+        )
+        .join("");
+    }
+
+    function selectWorkout(tab) {
+      state.currentTab = tab;
+      saveState();
+      renderAll();
+    }
+
+    function toggleGatewayMode() {
+      state.gatewayMode = document.getElementById("twoMinToggle").checked;
+      saveState();
+      renderAll();
+    }
+
+    function toggleSet(exId, setIndex) {
+      const today = getTodayISO();
+      const key = `${today}_${exId}_${setIndex}`;
+      if (state.completedSets[key]) {
+        delete state.completedSets[key];
+      } else {
+        state.completedSets[key] = true;
+        startRestTimer(90);
+      }
+      saveState();
+      renderAll();
+    }
+
+    function toggleSupplement(type) {
+      const today = getTodayISO();
+      const key = `${today}_${type}`;
+      if (state.supplements[key]) {
+        delete state.supplements[key];
+      } else {
+        state.supplements[key] = true;
+      }
+      saveState();
+      renderAll();
+    }
+
+    function saveWeight(exId, val) {
+      state.weights[exId] = val.trim();
+      saveState();
+    }
+
+    function completeWorkoutDay() {
+      const today = getTodayISO();
+      const existingIndex = state.completedDays.findIndex(
+        d => d.date === today && d.type === state.currentTab
+      );
+
+      if (existingIndex > -1) {
+        state.completedDays.splice(existingIndex, 1);
+      } else {
+        const workout = WORKOUTS[state.currentTab];
+        workout.exercises.forEach(ex => {
+          const setsCount = state.gatewayMode ? 1 : ex.defaultSets;
+          for (let s = 0; s < setsCount; s++) {
+            state.completedSets[`${today}_${ex.id}_${s}`] = true;
+          }
+        });
+        state.completedDays.push({
+          date: today,
+          type: state.currentTab,
+          title: workout.title
+        });
+      }
+      saveState();
+      renderAll();
+    }
+
+    function resetTodaySets() {
+      const today = getTodayISO();
+      const workout = WORKOUTS[state.currentTab];
+      workout.exercises.forEach(ex => {
+        for (let s = 0; s < 5; s++) {
+          delete state.completedSets[`${today}_${ex.id}_${s}`];
+        }
+      });
+      saveState();
+      renderAll();
+    }
+
+    function clearAllHistory() {
+      if (confirm("Reset all logged days, weights, and sets?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        state = {
+          currentTab: state.currentTab,
+          gatewayMode: false,
+          completedSets: {},
+          weights: {},
+          supplements: {},
+          completedDays: []
+        };
+        renderAll();
+      }
+    }
+
+    function startRestTimer(seconds) {
+      clearInterval(timerInterval);
+      remainingSeconds = seconds;
+      updateTimerUI();
+      timerInterval = setInterval(() => {
+        remainingSeconds--;
+        if (remainingSeconds <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById("timerDisplay").textContent = "GO!";
+          document.getElementById("timerStatusText").textContent = "Rest Complete — Next Set Ready!";
+          if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        } else {
+          updateTimerUI();
+        }
+      }, 1000);
+    }
+
+    function stopRestTimer() {
+      clearInterval(timerInterval);
+      document.getElementById("timerDisplay").textContent = "90s";
+      document.getElementById("timerStatusText").textContent = "Rest Timer Ready";
+    }
+
+    function updateTimerUI() {
+      document.getElementById("timerDisplay").textContent = `${remainingSeconds}s`;
+      document.getElementById("timerStatusText").textContent = "Resting between sets...";
+    }
+
+    loadState();
+    renderAll();
+  </script>
+</body>
+</html>
