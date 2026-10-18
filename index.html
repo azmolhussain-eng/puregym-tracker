@@ -79,12 +79,25 @@
         </span>
         <span id="quoteDayLabel" class="text-[10px] text-slate-400"></span>
       </div>
-      <p id="dailyQuoteText" class="text-xs text-slate-200 italic leading-relaxed mt-2">
-        <!-- Populated by JS -->
-      </p>
-      <div id="dailyQuoteSource" class="text-[11px] font-semibold text-emerald-400 mt-2 text-right">
-        <!-- Populated by JS -->
+      <p id="dailyQuoteText" class="text-xs text-slate-200 italic leading-relaxed mt-2"></p>
+      <div id="dailyQuoteSource" class="text-[11px] font-semibold text-emerald-400 mt-2 text-right"></div>
+    </section>
+
+    <!-- MONTHLY HABIT CALENDAR (TRACKS DONE & MISSED) -->
+    <section class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5">
+      <div class="flex justify-between items-center mb-3">
+        <span id="calendarMonthTitle" class="text-xs font-bold uppercase tracking-wider text-slate-200">Month Overview</span>
+        <div class="flex items-center space-x-3 text-[10px] text-slate-400">
+          <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-400 inline-block mr-1"></span> Done</span>
+          <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-rose-500/60 inline-block mr-1"></span> Missed</span>
+        </div>
       </div>
+      <!-- Weekday Headers -->
+      <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 mb-1">
+        <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+      </div>
+      <!-- Days Grid -->
+      <div id="monthlyCalendarGrid" class="grid grid-cols-7 gap-1 text-center"></div>
     </section>
 
     <!-- LAW 1: MAKE IT OBVIOUS (WEEKLY VISUAL CHAIN) -->
@@ -175,11 +188,10 @@
       <p id="completedTimestamp" class="text-center text-xs text-emerald-400 mt-2 hidden"></p>
     </div>
 
-    <!-- RECENT HISTORY LOG -->
+    <!-- RECENT HISTORY LOG (SAFE, NO DELETE BUTTON) -->
     <section class="bg-slate-800/40 border border-slate-800 rounded-2xl p-4 mt-6">
       <div class="flex justify-between items-center mb-2">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Completed Sessions Log</h3>
-        <button onclick="clearAllHistory()" class="text-[11px] text-rose-400/80 hover:underline">Clear All Data</button>
       </div>
       <div id="historyList" class="space-y-1.5 text-xs text-slate-300"></div>
     </section>
@@ -205,52 +217,23 @@
   </div>
 
   <script>
-    // AUTHENTIC QUOTES COLLECTION (Strength, Consistency, Health)
     const ISLAMIC_QUOTES = [
-      {
-        text: "The strong believer is better and more beloved to Allah than the weak believer, while there is good in both.",
-        source: "Prophet Muhammad (ﷺ) — Sahih Muslim"
-      },
-      {
-        text: "The most beloved deeds to Allah are those done regularly, even if they are small.",
-        source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari"
-      },
-      {
-        text: "Ask Allah for certainty and well-being (health), for truly, after certainty, no one is given a blessing better than health.",
-        source: "Prophet Muhammad (ﷺ) — Sunan An-Nasa'i"
-      },
-      {
-        text: "Take advantage of five before five: your youth before your old age, your health before your sickness...",
-        source: "Prophet Muhammad (ﷺ) — Al-Mustadrak al-Hakim"
-      },
-      {
-        text: "Verily, your body has a right over you.",
-        source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari"
-      },
-      {
-        text: "Patience is of two types: patience over what you hate, and patience with what you love (consistency in obedience).",
-        source: "Imam Ali ibn Abi Talib (ra)"
-      },
-      {
-        text: "Two blessings which many people squander: Health and free time.",
-        source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari"
-      },
-      {
-        text: "Strive for what benefits you, seek help from Allah, and do not lose heart.",
-        source: "Prophet Muhammad (ﷺ) — Sahih Muslim"
-      }
+      { text: "The strong believer is better and more beloved to Allah than the weak believer, while there is good in both.", source: "Prophet Muhammad (ﷺ) — Sahih Muslim" },
+      { text: "The most beloved deeds to Allah are those done regularly, even if they are small.", source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari" },
+      { text: "Ask Allah for certainty and well-being (health), for truly, after certainty, no one is given a blessing better than health.", source: "Prophet Muhammad (ﷺ) — Sunan An-Nasa'i" },
+      { text: "Take advantage of five before five: your youth before your old age, your health before your sickness...", source: "Prophet Muhammad (ﷺ) — Al-Mustadrak al-Hakim" },
+      { text: "Verily, your body has a right over you.", source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari" },
+      { text: "Patience is of two types: patience over what you hate, and patience with what you love (consistency in obedience).", source: "Imam Ali ibn Abi Talib (ra)" },
+      { text: "Two blessings which many people squander: Health and free time.", source: "Prophet Muhammad (ﷺ) — Sahih Al-Bukhari" },
+      { text: "Strive for what benefits you, seek help from Allah, and do not lose heart.", source: "Prophet Muhammad (ﷺ) — Sahih Muslim" }
     ];
 
     function loadDailyQuote() {
       const today = new Date();
-      // Generate a consistent index based on the day of the year so it changes daily
       const start = new Date(today.getFullYear(), 0, 0);
       const diff = today - start;
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-      
-      const quoteIndex = dayOfYear % ISLAMIC_QUOTES.length;
-      const selectedQuote = ISLAMIC_QUOTES[quoteIndex];
+      const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const selectedQuote = ISLAMIC_QUOTES[dayOfYear % ISLAMIC_QUOTES.length];
 
       document.getElementById("dailyQuoteText").textContent = `"${selectedQuote.text}"`;
       document.getElementById("dailyQuoteSource").textContent = `— ${selectedQuote.source}`;
@@ -263,24 +246,8 @@
         subtitle: "High-intensity court session • Agility, cardio & footwork",
         cue: "Pack racket, court shoes & water bottle before leaving for work.",
         exercises: [
-          {
-            id: "badminton_warmup",
-            name: "1. Dynamic Shoulder & Ankle Warm-Up",
-            muscle: "Joint Prep",
-            reps: "5 Mins",
-            defaultSets: 1,
-            tip: "Arm circles, wrist rotations, and light side-to-side lunges before stepping on court.",
-            url: null
-          },
-          {
-            id: "badminton_match",
-            name: "2. Badminton Court Session",
-            muscle: "Full Body Cardio & Footwork",
-            reps: "60 Mins",
-            defaultSets: 1,
-            tip: "Stay on the balls of your feet. Remember: Thursday Leg Day is 72 hours away so your legs can fully recover!",
-            url: null
-          }
+          { id: "badminton_warmup", name: "1. Dynamic Shoulder & Ankle Warm-Up", muscle: "Joint Prep", reps: "5 Mins", defaultSets: 1, tip: "Arm circles, wrist rotations, and light side-to-side lunges before stepping on court.", url: null },
+          { id: "badminton_match", name: "2. Badminton Court Session", muscle: "Full Body Cardio & Footwork", reps: "60 Mins", defaultSets: 1, tip: "Stay on the balls of your feet. Remember: Thursday Leg Day is 72 hours away so your legs can fully recover!", url: null }
         ]
       },
       push: {
@@ -288,42 +255,10 @@
         subtitle: "Chest, Shoulders & Triceps • 100% Fixed Machines & Cables",
         cue: "Yellow lever check first: set seat height before touching the weight pin.",
         exercises: [
-          {
-            id: "push_chest_press",
-            name: "1. Seated Chest Press Machine",
-            muscle: "Chest & Front Delts",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Adjust yellow seat lever so handles line up with your mid-chest. Keep shoulders pinned back against the pad.",
-            url: "https://www.youtube.com/watch?v=sqNwDkUU_Ps"
-          },
-          {
-            id: "push_shoulder_press",
-            name: "2. Shoulder Press Machine",
-            muscle: "Shoulders & Triceps",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Set seat so handles start near jawline/ear height. Press up without locking out elbows.",
-            url: "https://www.youtube.com/watch?v=TnhIyp4kmO8"
-          },
-          {
-            id: "push_pec_fly",
-            name: "3. Pec Fly Machine (Facing Out)",
-            muscle: "Chest Isolation",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Click yellow top pins so arms start wide. Sit tall and sweep handles together like hugging a tree.",
-            url: "https://www.youtube.com/watch?v=SPYgfb14hMk"
-          },
-          {
-            id: "push_tricep",
-            name: "4. Seated Tricep Press / Cable Pushdown",
-            muscle: "Triceps (Back of Arms)",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Keep elbows glued tightly to your ribs. Only your forearms should move.",
-            url: "https://www.youtube.com/watch?v=79GSKL3lSVU"
-          }
+          { id: "push_chest_press", name: "1. Seated Chest Press Machine", muscle: "Chest & Front Delts", reps: "10–12 reps", defaultSets: 3, tip: "Adjust yellow seat lever so handles line up with your mid-chest. Keep shoulders pinned back against the pad.", url: "https://www.youtube.com/watch?v=sqNwDkUU_Ps" },
+          { id: "push_shoulder_press", name: "2. Shoulder Press Machine", muscle: "Shoulders & Triceps", reps: "10–12 reps", defaultSets: 3, tip: "Set seat so handles start near jawline/ear height. Press up without locking out elbows.", url: "https://www.youtube.com/watch?v=TnhIyp4kmO8" },
+          { id: "push_pec_fly", name: "3. Pec Fly Machine (Facing Out)", muscle: "Chest Isolation", reps: "10–12 reps", defaultSets: 3, tip: "Click yellow top pins so arms start wide. Sit tall and sweep handles together like hugging a tree.", url: "https://www.youtube.com/watch?v=SPYgfb14hMk" },
+          { id: "push_tricep", name: "4. Seated Tricep Press / Cable Pushdown", muscle: "Triceps (Back of Arms)", reps: "10–12 reps", defaultSets: 3, tip: "Keep elbows glued tightly to your ribs. Only your forearms should move.", url: "https://www.youtube.com/watch?v=79GSKL3lSVU" }
         ]
       },
       legs: {
@@ -331,42 +266,10 @@
         subtitle: "Quads, Hamstrings, Glutes & Calves • Your Saved Routine",
         cue: "48 hours after Badminton—your legs are fresh. Focus on controlled tempo.",
         exercises: [
-          {
-            id: "legs_press",
-            name: "1. Seated Leg Press",
-            muscle: "Quads & Glutes",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Feet shoulder-width apart on the middle of the sled. Never lock your knees completely at the top.",
-            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
-          },
-          {
-            id: "legs_curl",
-            name: "2. Prone (or Seated) Leg Curl",
-            muscle: "Hamstrings",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Align your knee joint with the machine's pivot dot. Rest ankle pad just above your heels.",
-            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
-          },
-          {
-            id: "legs_extension",
-            name: "3. Leg Extension",
-            muscle: "Quadriceps",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Adjust backrest so the seat edge sits snugly behind your knees. Pause 1 second at the top.",
-            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
-          },
-          {
-            id: "legs_calf",
-            name: "4. Machine Calf Raise",
-            muscle: "Calves",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "1-second pause at the bottom stretch, 1-second squeeze at the top—don't bounce.",
-            url: "https://www.youtube.com/watch?v=7AAXfV8LvGs"
-          }
+          { id: "legs_press", name: "1. Seated Leg Press", muscle: "Quads & Glutes", reps: "10–12 reps", defaultSets: 3, tip: "Feet shoulder-width apart on the middle of the sled. Never lock your knees completely at the top.", url: "https://www.youtube.com/watch?v=7AAXfV8LvGs" },
+          { id: "legs_curl", name: "2. Prone (or Seated) Leg Curl", muscle: "Hamstrings", reps: "10–12 reps", defaultSets: 3, tip: "Align your knee joint with the machine's pivot dot. Rest ankle pad just above your heels.", url: "https://www.youtube.com/watch?v=7AAXfV8LvGs" },
+          { id: "legs_extension", name: "3. Leg Extension", muscle: "Quadriceps", reps: "10–12 reps", defaultSets: 3, tip: "Adjust backrest so the seat edge sits snugly behind your knees. Pause 1 second at the top.", url: "https://www.youtube.com/watch?v=7AAXfV8LvGs" },
+          { id: "legs_calf", name: "4. Machine Calf Raise", muscle: "Calves", reps: "10–12 reps", defaultSets: 3, tip: "1-second pause at the bottom stretch, 1-second squeeze at the top—don't bounce.", url: "https://www.youtube.com/watch?v=7AAXfV8LvGs" }
         ]
       },
       pull: {
@@ -374,49 +277,15 @@
         subtitle: "Back, Rear Shoulders & Biceps • Posture & Racket Arm Support",
         cue: "Think about pulling with your elbows rather than your hands to engage your back.",
         exercises: [
-          {
-            id: "pull_lat",
-            name: "1. Lat Pulldown (or Assisted Pull-Up)",
-            muscle: "Lats (Back Width)",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Lock knees under thigh pad. Pull bar smoothly down to upper chest while leaning slightly back.",
-            url: "https://www.youtube.com/watch?v=JGeRYIZdojU",
-            altUrl: "https://www.youtube.com/watch?v=wFj808u2HWU",
-            altLabel: "💡 Using Assisted Pull-Up Instead? Watch Guide"
-          },
-          {
-            id: "pull_row",
-            name: "2. Seated Row Machine",
-            muscle: "Mid-Back & Rhomboids",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Set seat so top of handles align with top of shoulders. Keep chest glued to the front pad.",
-            url: "https://www.youtube.com/watch?v=TeFo51Q_Nsc"
-          },
-          {
-            id: "pull_reardelt",
-            name: "3. Rear Delt Fly Machine (Facing Pad)",
-            muscle: "Rear Shoulders & Upper Back",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Same machine as Tuesday Pec Fly! Click arms all the way forward, sit facing the pad, and sweep back.",
-            url: "https://www.youtube.com/watch?v=SPYgfb14hMk"
-          },
-          {
-            id: "pull_bicep",
-            name: "4. Cable Bicep Curl (or Curl Machine)",
-            muscle: "Biceps (Front of Arms)",
-            reps: "10–12 reps",
-            defaultSets: 3,
-            tip: "Set pulley to the bottom with EZ-bar (or use Seated Preacher Curl machine). Keep elbows pinned to sides.",
-            url: "https://www.youtube.com/watch?v=GNlopToAZyg"
-          }
+          { id: "pull_lat", name: "1. Lat Pulldown (or Assisted Pull-Up)", muscle: "Lats (Back Width)", reps: "10–12 reps", defaultSets: 3, tip: "Lock knees under thigh pad. Pull bar smoothly down to upper chest while leaning slightly back.", url: "https://www.youtube.com/watch?v=JGeRYIZdojU", altUrl: "https://www.youtube.com/watch?v=wFj808u2HWU", altLabel: "💡 Using Assisted Pull-Up Instead? Watch Guide" },
+          { id: "pull_row", name: "2. Seated Row Machine", muscle: "Mid-Back & Rhomboids", reps: "10–12 reps", defaultSets: 3, tip: "Set seat so top of handles align with top of shoulders. Keep chest glued to the front pad.", url: "https://www.youtube.com/watch?v=TeFo51Q_Nsc" },
+          { id: "pull_reardelt", name: "3. Rear Delt Fly Machine (Facing Pad)", muscle: "Rear Shoulders & Upper Back", reps: "10–12 reps", defaultSets: 3, tip: "Same machine as Tuesday Pec Fly! Click arms all the way forward, sit facing the pad, and sweep back.", url: "https://www.youtube.com/watch?v=SPYgfb14hMk" },
+          { id: "pull_bicep", name: "4. Cable Bicep Curl (or Curl Machine)", muscle: "Biceps (Front of Arms)", reps: "10–12 reps", defaultSets: 3, tip: "Set pulley to the bottom with EZ-bar (or use Seated Preacher Curl machine). Keep elbows pinned to sides.", url: "https://www.youtube.com/watch?v=GNlopToAZyg" }
         ]
       }
     };
 
-    const STORAGE_KEY = "atomic_puregym_v5";
+    const STORAGE_KEY = "atomic_puregym_v6";
     let state = {
       currentTab: "legs",
       gatewayMode: false,
@@ -439,11 +308,7 @@
     function loadState() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        try {
-          state = { ...state, ...JSON.parse(saved) };
-        } catch (e) {
-          console.error("Failed to parse saved state", e);
-        }
+        try { state = { ...state, ...JSON.parse(saved) }; } catch (e) { console.error(e); }
       }
       const dayIndex = new Date().getDay();
       if (dayIndex === 1) state.currentTab = "badminton";
@@ -459,6 +324,7 @@
     function renderAll() {
       loadDailyQuote();
       renderHeaderStats();
+      renderMonthlyCalendar();
       renderWeekChain();
       renderTabs();
       renderWorkout();
@@ -485,8 +351,7 @@
 
       const workout = WORKOUTS[state.currentTab];
       const today = getTodayISO();
-      let totalSets = 0;
-      let doneSets = 0;
+      let totalSets = 0, doneSets = 0;
 
       workout.exercises.forEach(ex => {
         const setsCount = state.gatewayMode ? 1 : ex.defaultSets;
@@ -498,12 +363,63 @@
 
       const pct = totalSets > 0 ? Math.round((doneSets / totalSets) * 100) : 0;
       document.getElementById("setsTodayCount").textContent = `${pct}%`;
+      document.getElementById("currentDateLabel").textContent = now.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+    }
 
-      document.getElementById("currentDateLabel").textContent = new Date().toLocaleDateString("en-GB", {
-        weekday: "short",
-        day: "numeric",
-        month: "short"
-      });
+    function renderMonthlyCalendar() {
+      const container = document.getElementById("monthlyCalendarGrid");
+      container.innerHTML = "";
+
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+
+      document.getElementById("calendarMonthTitle").textContent = now.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+      
+      // Adjust JS getDay() so Monday is 0 (Mon=0, Sun=6)
+      let startDay = firstDayOfMonth.getDay() - 1;
+      if (startDay === -1) startDay = 6;
+
+      const todayISO = getTodayISO();
+
+      // Blank padding slots for previous month overflow
+      for (let i = 0; i < startDay; i++) {
+        const emptyCell = document.createElement("div");
+        emptyCell.className = "h-7";
+        container.appendChild(emptyCell);
+      }
+
+      // Days of current month
+      for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+        const d = new Date(year, month, day);
+        const offset = d.getTimezoneOffset();
+        const iso = new Date(d.getTime() - offset * 60 * 1000).toISOString().split("T")[0];
+
+        const isCompleted = state.completedDays.some(entry => entry.date === iso);
+        const isToday = iso === todayISO;
+        
+        // Determine if it was a scheduled workout day (Mon=Badminton, Tue=Push, Thu=Legs, Sat=Pull)
+        const dow = d.getDay(); // Sun=0, Mon=1...
+        const isScheduledDay = (dow === 1 || dow === 2 || dow === 4 || dow === 6);
+        const isPast = iso < todayISO;
+        const isMissed = isScheduledDay && !isCompleted && isPast;
+
+        const cell = document.createElement("div");
+        cell.className = `h-7 rounded-lg flex flex-col items-center justify-center text-[10px] font-bold transition ${
+          isCompleted
+            ? "bg-emerald-500 text-slate-950 font-black shadow-sm shadow-emerald-500/50"
+            : isMissed
+            ? "bg-rose-500/20 border border-rose-500/40 text-rose-300"
+            : isToday
+            ? "bg-slate-700 border border-amber-400 text-white"
+            : "bg-slate-900/60 text-slate-400 border border-slate-800/80"
+        }`;
+        cell.textContent = day;
+        container.appendChild(cell);
+      }
     }
 
     function renderWeekChain() {
@@ -536,11 +452,7 @@
 
         const cell = document.createElement("div");
         cell.className = `p-1.5 rounded-xl border text-center transition ${
-          isCompleted
-            ? "bg-emerald-500/20 border-emerald-500 text-emerald-300"
-            : isToday
-            ? "bg-slate-700/80 border-amber-400 text-white"
-            : "bg-slate-900/60 border-slate-800 text-slate-400"
+          isCompleted ? "bg-emerald-500/20 border-emerald-500 text-emerald-300" : isToday ? "bg-slate-700/80 border-amber-400 text-white" : "bg-slate-900/60 border-slate-800 text-slate-400"
         }`;
 
         cell.innerHTML = `
@@ -586,105 +498,57 @@
           const setKey = `${today}_${ex.id}_${s}`;
           const isDone = !!state.completedSets[setKey];
           setsButtonsHTML += `
-            <button
-              onclick="toggleSet('${ex.id}', ${s})"
-              class="set-btn py-2.5 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center ${
-                isDone
-                  ? "done"
-                  : "bg-slate-900/90 border-slate-700 text-slate-300 hover:border-slate-500"
-              }"
-            >
+            <button onclick="toggleSet('${ex.id}', ${s})" class="set-btn py-2.5 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center ${isDone ? "done" : "bg-slate-900/90 border-slate-700 text-slate-300 hover:border-slate-500"}">
               <span>SET ${s + 1}</span>
               <span class="text-[10px] font-normal opacity-90">${isDone ? "✓ Done" : ex.reps}</span>
             </button>
           `;
         }
 
-        const videoSectionHTML = ex.url
-          ? `
-            <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex flex-col space-y-2">
-              <a
-                href="${ex.url}"
-                target="_blank"
-                rel="noopener"
-                class="inline-flex items-center justify-center space-x-2 w-full py-2.5 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold text-xs hover:bg-emerald-500/25 transition"
-              >
-                <span>▶️ Watch Official PureGym Video Guide</span>
-              </a>
-              ${
-                ex.altUrl
-                  ? `
-                  <a
-                    href="${ex.altUrl}"
-                    target="_blank"
-                    rel="noopener"
-                    class="text-[11px] text-sky-400 hover:underline text-center"
-                  >
-                    ${ex.altLabel}
-                  </a>
-                `
-                  : ""
-              }
-            </div>
-          `
-          : "";
+        const videoSectionHTML = ex.url ? `
+          <div class="mt-3 pt-2.5 border-t border-slate-700/60 flex flex-col space-y-2">
+            <a href="${ex.url}" target="_blank" rel="noopener" class="inline-flex items-center justify-center space-x-2 w-full py-2.5 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold text-xs hover:bg-emerald-500/25 transition">
+              <span>▶️ Watch Official PureGym Video Guide</span>
+            </a>
+            ${ex.altUrl ? `<a href="${ex.altUrl}" target="_blank" rel="noopener" class="text-[11px] text-sky-400 hover:underline text-center">${ex.altLabel}</a>` : ""}
+          </div>
+        ` : "";
 
-        const weightInputHTML = ex.url
-          ? `
-            <div class="flex items-center space-x-1.5 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
-              <span class="text-[11px] text-slate-400">Pin:</span>
-              <input
-                type="text"
-                placeholder="kg"
-                value="${savedWeight}"
-                onchange="saveWeight('${ex.id}', this.value)"
-                class="w-12 bg-transparent text-xs font-bold text-white focus:outline-none text-center"
-              />
-            </div>
-          `
-          : "";
+        const weightInputHTML = ex.url ? `
+          <div class="flex items-center space-x-1.5 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
+            <span class="text-[11px] text-slate-400">Pin:</span>
+            <input type="text" placeholder="kg" value="${savedWeight}" onchange="saveWeight('${ex.id}', this.value)" class="w-12 bg-transparent text-xs font-bold text-white focus:outline-none text-center" />
+          </div>
+        ` : "";
 
         const card = document.createElement("div");
         card.className = "bg-slate-800/80 border border-slate-700/90 rounded-2xl p-4 shadow-md";
         card.innerHTML = `
           <div class="flex items-start justify-between gap-2">
             <div>
-              <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-700 text-emerald-300 mb-1">
-                ${ex.muscle}
-              </span>
+              <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-700 text-emerald-300 mb-1">${ex.muscle}</span>
               <h3 class="text-base font-bold text-white leading-snug">${ex.name}</h3>
             </div>
             ${weightInputHTML}
           </div>
-
-          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-            💡 ${ex.tip}
-          </p>
-
-          <div class="grid ${setsCount === 1 ? "grid-cols-1" : "grid-cols-3"} gap-2 mt-3">
-            ${setsButtonsHTML}
-          </div>
-
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">💡 ${ex.tip}</p>
+          <div class="grid ${setsCount === 1 ? "grid-cols-1" : "grid-cols-3"} gap-2 mt-3">${setsButtonsHTML}</div>
           ${videoSectionHTML}
         `;
         container.appendChild(card);
       });
 
-      const alreadyLoggedToday = state.completedDays.some(
-        d => d.date === today && d.type === state.currentTab
-      );
+      const alreadyLoggedToday = state.completedDays.some(d => d.date === today && d.type === state.currentTab);
       const btn = document.getElementById("completeDayBtn");
       const stamp = document.getElementById("completedTimestamp");
 
       if (alreadyLoggedToday) {
-        btn.className =
-          "w-full py-4 px-5 rounded-2xl font-extrabold text-base transition flex items-center justify-center space-x-2 bg-slate-800 border border-emerald-500/50 text-emerald-400";
+        btn.className = "w-full py-4 px-5 rounded-2xl font-extrabold text-base transition flex items-center justify-center space-x-2 bg-slate-800 border border-emerald-500/50 text-emerald-400";
         btn.innerHTML = `<span>🎉 Session Logged Today! (Tap to Undo)</span>`;
         stamp.classList.remove("hidden");
         stamp.textContent = "Identity vote cast! Your total days counter has been updated.";
       } else {
-        btn.className =
-          "w-full py-4 px-5 rounded-2xl font-extrabold text-base shadow-lg transition flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950";
+        btn.className = "w-full py-4 px-5 rounded-2xl font-extrabold text-base shadow-lg transition flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950";
         btn.innerHTML = `<span>✅ Cast Identity Vote — Mark Day Done</span>`;
         stamp.classList.add("hidden");
       }
@@ -692,7 +556,6 @@
 
     function renderSupplements() {
       const today = getTodayISO();
-      
       const creatineKey = `${today}_creatine`;
       const isCreatineDone = !!state.supplements[creatineKey];
       const creatineBtn = document.getElementById("suppCreatineBtn");
@@ -725,16 +588,12 @@
         return;
       }
       const recent = [...state.completedDays].reverse().slice(0, 8);
-      list.innerHTML = recent
-        .map(
-          item => `
+      list.innerHTML = recent.map(item => `
         <div class="flex justify-between items-center py-1.5 px-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
           <span class="font-semibold text-emerald-400">✓ ${item.title}</span>
           <span class="text-slate-400">${item.date}</span>
         </div>
-      `
-        )
-        .join("");
+      `).join("");
     }
 
     function selectWorkout(tab) {
@@ -781,9 +640,7 @@
 
     function completeWorkoutDay() {
       const today = getTodayISO();
-      const existingIndex = state.completedDays.findIndex(
-        d => d.date === today && d.type === state.currentTab
-      );
+      const existingIndex = state.completedDays.findIndex(d => d.date === today && d.type === state.currentTab);
 
       if (existingIndex > -1) {
         state.completedDays.splice(existingIndex, 1);
@@ -795,11 +652,7 @@
             state.completedSets[`${today}_${ex.id}_${s}`] = true;
           }
         });
-        state.completedDays.push({
-          date: today,
-          type: state.currentTab,
-          title: workout.title
-        });
+        state.completedDays.push({ date: today, type: state.currentTab, title: workout.title });
       }
       saveState();
       renderAll();
@@ -815,21 +668,6 @@
       });
       saveState();
       renderAll();
-    }
-
-    function clearAllHistory() {
-      if (confirm("Reset all logged days, weights, and sets?")) {
-        localStorage.removeItem(STORAGE_KEY);
-        state = {
-          currentTab: state.currentTab,
-          gatewayMode: false,
-          completedSets: {},
-          weights: {},
-          supplements: {},
-          completedDays: []
-        };
-        renderAll();
-      }
     }
 
     function startRestTimer(seconds) {
