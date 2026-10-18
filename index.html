@@ -33,9 +33,6 @@
       color: #0f172a;
       font-weight: 700;
     }
-    iframe {
-      border-radius: 0.75rem;
-    }
   </style>
 </head>
 <body class="pb-28 max-w-md mx-auto min-h-screen select-none">
@@ -129,7 +126,7 @@
     <!-- EXERCISE CARDS CONTAINER -->
     <div id="exerciseContainer" class="space-y-4"></div>
 
-    <!-- SUPPLEMENT STACK & NUTRITION TRACKER (NEW!) -->
+    <!-- SUPPLEMENT STACK & NUTRITION TRACKER -->
     <section class="bg-slate-800/80 border border-sky-500/30 rounded-2xl p-4 shadow-md">
       <div class="flex items-center justify-between mb-2">
         <div>
@@ -205,7 +202,7 @@
             reps: "5 Mins",
             defaultSets: 1,
             tip: "Arm circles, wrist rotations, and light side-to-side lunges before stepping on court.",
-            videoId: null
+            url: null
           },
           {
             id: "badminton_match",
@@ -214,7 +211,7 @@
             reps: "60 Mins",
             defaultSets: 1,
             tip: "Stay on the balls of your feet. Remember: Thursday Leg Day is 72 hours away so your legs can fully recover!",
-            videoId: null
+            url: null
           }
         ]
       },
@@ -230,8 +227,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Adjust yellow seat lever so handles line up with your mid-chest. Keep shoulders pinned back against the pad.",
-            videoId: "sqNwDkUU_Ps",
-            videoStart: 0
+            url: "https://www.youtube.com/watch?v=sqNwDkUU_Ps"
           },
           {
             id: "push_shoulder_press",
@@ -240,8 +236,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Set seat so handles start near jawline/ear height. Press up without locking out elbows.",
-            videoId: "TnhIyp4kmO8",
-            videoStart: 0
+            url: "https://www.youtube.com/watch?v=TnhIyp4kmO8"
           },
           {
             id: "push_pec_fly",
@@ -250,8 +245,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Click yellow top pins so arms start wide. Sit tall and sweep handles together like hugging a tree.",
-            videoId: "SPYgfb14hMk",
-            videoStart: 0
+            url: "https://www.youtube.com/watch?v=SPYgfb14hMk"
           },
           {
             id: "push_tricep",
@@ -260,8 +254,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Keep elbows glued tightly to your ribs. Only your forearms should move.",
-            videoId: "79GSKL3lSVU",
-            videoStart: 0
+            url: "https://www.youtube.com/watch?v=79GSKL3lSVU"
           }
         ]
       },
@@ -277,8 +270,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Feet shoulder-width apart on the middle of the sled. Never lock your knees completely at the top.",
-            videoId: "7AAXfV8LvGs",
-            videoStart: 2
+            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
           },
           {
             id: "legs_curl",
@@ -287,8 +279,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Align your knee joint with the machine's pivot dot. Rest ankle pad just above your heels.",
-            videoId: "7AAXfV8LvGs",
-            videoStart: 8
+            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
           },
           {
             id: "legs_extension",
@@ -297,8 +288,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Adjust backrest so the seat edge sits snugly behind your knees. Pause 1 second at the top.",
-            videoId: "7AAXfV8LvGs",
-            videoStart: 16
+            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
           },
           {
             id: "legs_calf",
@@ -307,8 +297,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "1-second pause at the bottom stretch, 1-second squeeze at the top—don't bounce.",
-            videoId: "7AAXfV8LvGs",
-            videoStart: 22
+            url: "http://www.youtube.com/watch?v=7AAXfV8LvGs"
           }
         ]
       },
@@ -324,10 +313,9 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Lock knees under thigh pad. Pull bar smoothly down to upper chest while leaning slightly back.",
-            videoId: "JGeRYIZdojU",
-            videoStart: 0,
-            altVideoUrl: "https://www.youtube.com/watch?v=wFj808u2HWU",
-            altVideoLabel: "Using Assisted Pull-Up Instead? Watch PureGym Guide"
+            url: "https://www.youtube.com/watch?v=JGeRYIZdojU",
+            altUrl: "https://www.youtube.com/watch?v=wFj808u2HWU",
+            altLabel: "💡 Using Assisted Pull-Up Instead? Watch Guide"
           },
           {
             id: "pull_row",
@@ -336,8 +324,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Set seat so top of handles align with top of shoulders. Keep chest glued to the front pad.",
-            videoId: "TeFo51Q_Nsc",
-            videoStart: 0
+            url: "https://www.youtube.com/watch?v=TeFo51Q_Nsc"
           },
           {
             id: "pull_reardelt",
@@ -346,8 +333,7 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Same machine as Tuesday Pec Fly! Click arms all the way forward, sit facing the pad, and sweep back.",
-            videoId: "SPYgfb14hMk",
-            videoStart: 34
+            url: "https://www.youtube.com/watch?v=SPYgfb14hMk"
           },
           {
             id: "pull_bicep",
@@ -356,22 +342,20 @@
             reps: "10–12 reps",
             defaultSets: 3,
             tip: "Set pulley to the bottom with EZ-bar (or use Seated Preacher Curl machine). Keep elbows pinned to sides.",
-            videoId: "GNlopToAZyg",
-            videoStart: 0
+            url: "https://www.youtube.com/watch?v=GNlopToAZyg"
           }
         ]
       }
     };
 
-    const STORAGE_KEY = "atomic_puregym_v2";
+    const STORAGE_KEY = "atomic_puregym_v3";
     let state = {
       currentTab: "legs",
       gatewayMode: false,
       completedSets: {},
       weights: {},
-      supplements: {},        // { "2026-10-18_creatine": true, "2026-10-18_protein": true }
-      completedDays: [],
-      openVideos: {}
+      supplements: {},
+      completedDays: []
     };
 
     let timerInterval = null;
@@ -474,370 +458,4 @@
       labels.forEach((dayInfo, idx) => {
         const d = new Date(monday);
         d.setDate(monday.getDate() + idx);
-        const offset = d.getTimezoneOffset();
-        const iso = new Date(d.getTime() - offset * 60 * 1000).toISOString().split("T")[0];
-
-        const isCompleted = state.completedDays.some(entry => entry.date === iso);
-        const isToday = idx === currentDayIndex;
-        const isRest = dayInfo.target === "Rest";
-
-        const cell = document.createElement("div");
-        cell.className = `p-1.5 rounded-xl border text-center transition ${
-          isCompleted
-            ? "bg-emerald-500/20 border-emerald-500 text-emerald-300"
-            : isToday
-            ? "bg-slate-700/80 border-amber-400 text-white"
-            : "bg-slate-900/60 border-slate-800 text-slate-400"
-        }`;
-
-        cell.innerHTML = `
-          <div class="text-[10px] font-bold">${dayInfo.name}</div>
-          <div class="my-1 text-sm">${isCompleted ? "✅" : isRest ? "🧘" : "⭕"}</div>
-          <div class="text-[9px] truncate opacity-80">${dayInfo.target}</div>
-        `;
-        container.appendChild(cell);
-      });
-    }
-
-    function renderTabs() {
-      ["badminton", "push", "legs", "pull"].forEach(tab => {
-        const el = document.getElementById(`tab-${tab}`);
-        if (state.currentTab === tab) {
-          el.classList.add("tab-active");
-          el.classList.remove("text-slate-300");
-        } else {
-          el.classList.remove("tab-active");
-          el.classList.add("text-slate-300");
-        }
-      });
-    }
-
-    function renderWorkout() {
-      const workout = WORKOUTS[state.currentTab];
-      const today = getTodayISO();
-
-      document.getElementById("workoutTitle").textContent = workout.title;
-      document.getElementById("workoutSubtitle").textContent = workout.subtitle;
-      document.getElementById("habitCueText").textContent = workout.cue;
-      document.getElementById("twoMinToggle").checked = state.gatewayMode;
-
-      const container = document.getElementById("exerciseContainer");
-      container.innerHTML = "";
-
-      workout.exercises.forEach(ex => {
-        const setsCount = state.gatewayMode ? 1 : ex.defaultSets;
-        const savedWeight = state.weights[ex.id] || "";
-        const isVideoOpen = !!state.openVideos[ex.id];
-
-        let setsButtonsHTML = "";
-        for (let s = 0; s < setsCount; s++) {
-          const setKey = `${today}_${ex.id}_${s}`;
-          const isDone = !!state.completedSets[setKey];
-          setsButtonsHTML += `
-            <button
-              onclick="toggleSet('${ex.id}', ${s})"
-              class="set-btn py-2.5 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center ${
-                isDone
-                  ? "done"
-                  : "bg-slate-900/90 border-slate-700 text-slate-300 hover:border-slate-500"
-              }"
-            >
-              <span>SET ${s + 1}</span>
-              <span class="text-[10px] font-normal opacity-90">${isDone ? "✓ Done" : ex.reps}</span>
-            </button>
-          `;
-        }
-
-        const videoSectionHTML = ex.videoId
-          ? `
-            <div class="mt-3 pt-2.5 border-t border-slate-700/60">
-              <div class="flex items-center justify-between">
-                <button
-                  onclick="toggleVideo('${ex.id}')"
-                  class="inline-flex items-center space-x-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300"
-                >
-                  <span>${isVideoOpen ? "🔼 Hide PureGym Video" : "▶️ Watch PureGym Machine Guide"}</span>
-                </button>
-                <a
-                  href="https://www.youtube.com/watch?v=${ex.videoId}${ex.videoStart ? `&t=${ex.videoStart}s` : ""}"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[11px] text-slate-400 hover:text-white underline"
-                >
-                  Open in YouTube ↗
-                </a>
-              </div>
-              ${
-                isVideoOpen
-                  ? `
-                  <div class="mt-2.5 aspect-video w-full overflow-hidden rounded-xl bg-black border border-slate-700">
-                    <iframe
-                      class="w-full h-full"
-                      src="https://www.youtube-nocookie.com/embed/${ex.videoId}?start=${ex.videoStart || 0}&rel=0"
-                      title="${ex.name}"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                `
-                  : ""
-              }
-              ${
-                ex.altVideoUrl
-                  ? `
-                  <div class="mt-1.5">
-                    <a href="${ex.altVideoUrl}" target="_blank" rel="noopener" class="text-[11px] text-sky-400 hover:underline">
-                      💡 ${ex.altVideoLabel} ↗
-                    </a>
-                  </div>
-                `
-                  : ""
-              }
-            </div>
-          `
-          : "";
-
-        const weightInputHTML = ex.videoId
-          ? `
-            <div class="flex items-center space-x-1.5 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
-              <span class="text-[11px] text-slate-400">Pin:</span>
-              <input
-                type="text"
-                placeholder="kg"
-                value="${savedWeight}"
-                onchange="saveWeight('${ex.id}', this.value)"
-                class="w-12 bg-transparent text-xs font-bold text-white focus:outline-none text-center"
-              />
-            </div>
-          `
-          : "";
-
-        const card = document.createElement("div");
-        card.className = "bg-slate-800/80 border border-slate-700/90 rounded-2xl p-4 shadow-md";
-        card.innerHTML = `
-          <div class="flex items-start justify-between gap-2">
-            <div>
-              <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-700 text-emerald-300 mb-1">
-                ${ex.muscle}
-              </span>
-              <h3 class="text-base font-bold text-white leading-snug">${ex.name}</h3>
-            </div>
-            ${weightInputHTML}
-          </div>
-
-          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-            💡 ${ex.tip}
-          </p>
-
-          <div class="grid ${setsCount === 1 ? "grid-cols-1" : "grid-cols-3"} gap-2 mt-3">
-            ${setsButtonsHTML}
-          </div>
-
-          ${videoSectionHTML}
-        `;
-        container.appendChild(card);
-      });
-
-      const alreadyLoggedToday = state.completedDays.some(
-        d => d.date === today && d.type === state.currentTab
-      );
-      const btn = document.getElementById("completeDayBtn");
-      const stamp = document.getElementById("completedTimestamp");
-
-      if (alreadyLoggedToday) {
-        btn.className =
-          "w-full py-4 px-5 rounded-2xl font-extrabold text-base transition flex items-center justify-center space-x-2 bg-slate-800 border border-emerald-500/50 text-emerald-400";
-        btn.innerHTML = `<span>🎉 Session Logged Today! (Tap to Undo)</span>`;
-        stamp.classList.remove("hidden");
-        stamp.textContent = "Identity vote cast! Your total days counter has been updated.";
-      } else {
-        btn.className =
-          "w-full py-4 px-5 rounded-2xl font-extrabold text-base shadow-lg transition flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950";
-        btn.innerHTML = `<span>✅ Cast Identity Vote — Mark Day Done</span>`;
-        stamp.classList.add("hidden");
-      }
-    }
-
-    function renderSupplements() {
-      const today = getTodayISO();
-      
-      const creatineKey = `${today}_creatine`;
-      const isCreatineDone = !!state.supplements[creatineKey];
-      const creatineBtn = document.getElementById("suppCreatineBtn");
-      const creatineText = document.getElementById("creatineStatusText");
-      if (isCreatineDone) {
-        creatineBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center done";
-        creatineText.textContent = "✓ Taken Today";
-      } else {
-        creatineBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center bg-slate-900/90 border-slate-700 text-slate-300";
-        creatineText.textContent = "5g Monohydrate • Pending";
-      }
-
-      const proteinKey = `${today}_protein`;
-      const isProteinDone = !!state.supplements[proteinKey];
-      const proteinBtn = document.getElementById("suppProteinBtn");
-      const proteinText = document.getElementById("proteinStatusText");
-      if (isProteinDone) {
-        proteinBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center done";
-        proteinText.textContent = "✓ Goal Hit Today";
-      } else {
-        proteinBtn.className = "supp-btn py-3 px-3 rounded-xl border font-bold text-xs flex flex-col items-center justify-center bg-slate-900/90 border-slate-700 text-slate-300";
-        proteinText.textContent = "Daily Goal • Pending";
-      }
-    }
-
-    function renderHistory() {
-      const list = document.getElementById("historyList");
-      if (state.completedDays.length === 0) {
-        list.innerHTML = `<div class="text-slate-500 italic">No workouts completed yet. Cast your first identity vote today!</div>`;
-        return;
-      }
-      const recent = [...state.completedDays].reverse().slice(0, 8);
-      list.innerHTML = recent
-        .map(
-          item => `
-        <div class="flex justify-between items-center py-1.5 px-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
-          <span class="font-semibold text-emerald-400">✓ ${item.title}</span>
-          <span class="text-slate-400">${item.date}</span>
-        </div>
-      `
-        )
-        .join("");
-    }
-
-    function selectWorkout(tab) {
-      state.currentTab = tab;
-      saveState();
-      renderAll();
-    }
-
-    function toggleGatewayMode() {
-      state.gatewayMode = document.getElementById("twoMinToggle").checked;
-      saveState();
-      renderAll();
-    }
-
-    function toggleSet(exId, setIndex) {
-      const today = getTodayISO();
-      const key = `${today}_${exId}_${setIndex}`;
-      if (state.completedSets[key]) {
-        delete state.completedSets[key];
-      } else {
-        state.completedSets[key] = true;
-        startRestTimer(90);
-      }
-      saveState();
-      renderAll();
-    }
-
-    function toggleSupplement(type) {
-      const today = getTodayISO();
-      const key = `${today}_${type}`;
-      if (state.supplements[key]) {
-        delete state.supplements[key];
-      } else {
-        state.supplements[key] = true;
-      }
-      saveState();
-      renderAll();
-    }
-
-    function toggleVideo(exId) {
-      state.openVideos[exId] = !state.openVideos[exId];
-      saveState();
-      renderWorkout();
-    }
-
-    function saveWeight(exId, val) {
-      state.weights[exId] = val.trim();
-      saveState();
-    }
-
-    function completeWorkoutDay() {
-      const today = getTodayISO();
-      const existingIndex = state.completedDays.findIndex(
-        d => d.date === today && d.type === state.currentTab
-      );
-
-      if (existingIndex > -1) {
-        state.completedDays.splice(existingIndex, 1);
-      } else {
-        const workout = WORKOUTS[state.currentTab];
-        workout.exercises.forEach(ex => {
-          const setsCount = state.gatewayMode ? 1 : ex.defaultSets;
-          for (let s = 0; s < setsCount; s++) {
-            state.completedSets[`${today}_${ex.id}_${s}`] = true;
-          }
-        });
-        state.completedDays.push({
-          date: today,
-          type: state.currentTab,
-          title: workout.title
-        });
-      }
-      saveState();
-      renderAll();
-    }
-
-    function resetTodaySets() {
-      const today = getTodayISO();
-      const workout = WORKOUTS[state.currentTab];
-      workout.exercises.forEach(ex => {
-        for (let s = 0; s < 5; s++) {
-          delete state.completedSets[`${today}_${ex.id}_${s}`];
-        }
-      });
-      saveState();
-      renderAll();
-    }
-
-    function clearAllHistory() {
-      if (confirm("Reset all logged days, weights, and sets?")) {
-        localStorage.removeItem(STORAGE_KEY);
-        state = {
-          currentTab: state.currentTab,
-          gatewayMode: false,
-          completedSets: {},
-          weights: {},
-          supplements: {},
-          completedDays: [],
-          openVideos: {}
-        };
-        renderAll();
-      }
-    }
-
-    function startRestTimer(seconds) {
-      clearInterval(timerInterval);
-      remainingSeconds = seconds;
-      updateTimerUI();
-      timerInterval = setInterval(() => {
-        remainingSeconds--;
-        if (remainingSeconds <= 0) {
-          clearInterval(timerInterval);
-          document.getElementById("timerDisplay").textContent = "GO!";
-          document.getElementById("timerStatusText").textContent = "Rest Complete — Next Set Ready!";
-          if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-        } else {
-          updateTimerUI();
-        }
-      }, 1000);
-    }
-
-    function stopRestTimer() {
-      clearInterval(timerInterval);
-      document.getElementById("timerDisplay").textContent = "90s";
-      document.getElementById("timerStatusText").textContent = "Rest Timer Ready";
-    }
-
-    function updateTimerUI() {
-      document.getElementById("timerDisplay").textContent = `${remainingSeconds}s`;
-      document.getElementById("timerStatusText").textContent = "Resting between sets...";
-    }
-
-    loadState();
-    renderAll();
-  </script>
-</body>
-</html>
+        c
